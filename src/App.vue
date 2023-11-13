@@ -9,6 +9,11 @@
     </ul>
   </div>
 
+  <!-- <p>{{ $store.state.more }}</p>
+  <button @click="$store.dispatch('getData')">더보기</button> -->
+
+  <!-- <p>{{ name }} {{ likes }}</p>
+  <button @click="이름변경()">버튼</button> -->
   <!-- 
   <h4>안녕 {{ $store.state.name }}</h4>
   <h4>나이는 {{ $store.state.age }}</h4>
@@ -21,7 +26,7 @@
     :이미지="이미지"
     @write="작성한글 = $event"
   />
-  <button @click="more()">더보기</button>
+  <!-- <button @click="more()">더보기</button> -->
 
   <div class="footer">
     <ul class="footer-button-plus">
@@ -35,13 +40,14 @@
 import axios from "axios";
 import postdata from "./assets/postdata.js";
 import Container from "./components/Container.vue";
+import { mapState, mapMutations } from "vuex";
 export default {
   name: "App",
   data() {
     return {
       postdata,
       moreCount: 0,
-      step: 0,
+      step: 3,
       이미지: "",
       작성한글: "",
       선택한필터: "",
@@ -55,7 +61,16 @@ export default {
   components: {
     Container,
   },
+
+  computed: {
+    // name() {
+    //   return this.$store.state.name;
+    // },
+    ...mapState(["name", "age", "likes"]),
+  },
+
   methods: {
+    ...mapMutations(["setMore", "좋아요", "이름변경"]),
     publish() {
       let 내게시물 = {
         name: "에디",
